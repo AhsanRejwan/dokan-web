@@ -32,3 +32,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+/.idea/dokan-web.iml
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea/watcherTasks.xml
+/.idea/.gitignore
+/.idea/inspectionProfiles/Project_Default.xml
