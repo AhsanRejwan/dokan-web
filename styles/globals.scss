@@ -16,3 +16,18 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.alert-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+  .cancel-button {
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+}
+

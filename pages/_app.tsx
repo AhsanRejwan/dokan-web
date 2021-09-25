@@ -1,7 +1,13 @@
 import '../styles/globals.scss'
-import type { AppProps } from 'next/app'
+import type {AppProps} from 'next/app'
+import {AlertContextProvider} from "../contexts/AlertContext";
+import React from "react";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+const MyApp = ({Component, pageProps}: AppProps) => {
+    return (
+        <AlertContextProvider>
+                <Component {...pageProps} />
+        </AlertContextProvider>
+    )
 }
 export default MyApp
