@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import Modal from "react-bootstrap/Modal";
-import {Button, Form} from "react-bootstrap";
-import {IoAddCircle, IoClose, IoRemoveCircle} from "react-icons/io5"
-import styles from "../ProductCard.module.scss"
+import {Button} from "react-bootstrap";
+import {IoClose} from "react-icons/io5"
+import {AddToCartForm} from "../AddToCartForm";
+import {useCartContext} from "../../contexts/CartContext";
 
 type ProductDetails = {
+    id: string,
     name: string,
     price: string,
     stock: string,
@@ -16,24 +18,35 @@ type ProductDetails = {
 }
 
 export const ProductDetails = (props: ProductDetails) => {
-    const {name, price, stock, description, featuredImage, images, show, toggle} = props;
-    const [addCount, setAddCount] = useState(0)
+    const {id, name, price, stock, description, featuredImage, images, show, toggle} = props;
+    const [count, setCount] = useState(0);
+
+    const {products, dispatch} = useCartContext()
 
     const countIncrement = () => {
-        if (addCount < Number(stock)) {
-            setAddCount(prevState => prevState + 1);
+        if (count < Number(stock)) {
+            setCount(prevState => prevState + 1);
         }
     }
 
     const countDecrement = () => {
-        if (addCount > 0) {
-            setAddCount(prevState => prevState - 1);
+        if (count > 0) {
+            setCount(prevState => prevState - 1);
         }
     }
 
-    const changeCount = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setAddCount(Number(e.currentTarget.value));
+    const changeCount = (value: string) => {
+        setCount(Number(value));
     }
+
+    const addToCart = () => {
+        dispatch({
+            type: "add",
+            product: {id: id, name: name, description: description, price: price, quantity: count.toString()}
+        })
+    }
+
+    console.log(products);
 
     return (
         <Modal show={show} onHide={toggle} animation={false}>
@@ -65,27 +78,8 @@ export const ProductDetails = (props: ProductDetails) => {
                 <div className="mt-2">
                     <span>{description}</span>
                 </div>
-                <Form className="mt-4 d-flex justify-content-between align-items-center">
-                    <div className="d-flex align-items-center">
-                        <IoRemoveCircle role="button" size={30} color='#ce3d3d' onClick={countDecrement}/>
-                        <Form.Control type="number" min="1" max={stock}
-                                      className={styles.quantityInput}
-                                      aria-label="Quantity Input" aria-describedby="input-field" value={addCount}
-                                      onChange={(event) => changeCount(event)}/>
-                        <IoAddCircle role="button" size={30} color="green" onClick={countIncrement}/>
-                    </div>
-                    {
-                        Number(stock) > 0 ? (
-                            <button type="submit" className="btn colored-button">
-                                ADD TO CART
-                            </button>
-                        ) : (
-                            <button disabled type="submit" className={`${styles.noStockButton} btn`}>
-                                OUT OF STOCK
-                            </button>
-                        )
-                    }
-                </Form>
+                <AddToCartForm stock={stock} count={count.toString()} increment={countIncrement}
+                               decrement={countDecrement} change={changeCount} addToCart={addToCart}/>
             </Modal.Body>
         </Modal>
     );

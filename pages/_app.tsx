@@ -3,12 +3,15 @@ import type {AppProps} from 'next/app'
 import {AlertContextProvider} from "../contexts/AlertContext";
 import React from "react";
 import {AppContextProvider} from "../contexts/AppContext";
+import {CartContextProvider} from "../contexts/CartContext";
 
 const MyApp = ({Component, pageProps}: AppProps) => {
     return (
         <AlertContextProvider>
             <AppContextProvider>
-                <Component {...pageProps} />
+                <CartContextProvider>
+                    <Component {...pageProps} />
+                </CartContextProvider>
             </AppContextProvider>
         </AlertContextProvider>
     )

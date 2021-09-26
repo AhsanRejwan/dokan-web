@@ -76,7 +76,7 @@ export const ProductContainer = () => {
 
     return (
         <div className="mt-5">
-            <h6 className="primary font-weight-bold ">PRODUCTS</h6>
+            <h6 className="primary font-weight-bold">PRODUCTS</h6>
             <Form>
                 <div className="input-group mb-3 mt-3">
                     <Form.Control type="text" className="form-control" placeholder="Search"
@@ -90,7 +90,7 @@ export const ProductContainer = () => {
             <div className="row px-3 mt-2">
                 {
                     filteredList.map(product => (
-                        <ProductCard key={product.id} name={product.name} price={product.price}
+                        <ProductCard key={product.id} id={product.id} name={product.name} price={product.price}
                                      stock={product.stock}
                                      description={product.description} featuredImage={product.featuredImage}
                                      images={product.images}/>

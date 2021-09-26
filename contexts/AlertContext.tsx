@@ -26,16 +26,16 @@ type AlertProviderProps = {
     children: React.ReactNode
 }
 
-type AlertContext = {
-    state: AlertState,
-    dispatch: Dispatch<ActionTypes>
-}
-
 type ActionTypes = {
     type: "show",
     content: AlertContent
 } | {
     type: "close"
+}
+
+type AlertContext = {
+    state: AlertState,
+    dispatch: Dispatch<ActionTypes>
 }
 
 const AlertContext = React.createContext<AlertContext>(EMPTY);

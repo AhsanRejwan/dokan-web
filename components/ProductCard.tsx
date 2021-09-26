@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import styles from "./ProductCard.module.scss"
 import {ProductDetails} from "./modals/ProductDetails";
-import {Product} from "../models/Product";
+import {useCartContext} from "../contexts/CartContext";
+import {AddToCartForm} from "./AddToCartForm";
 
 type ProductCard = {
+    id: string,
     name: string,
     price: string,
     stock: string,
@@ -14,6 +16,7 @@ type ProductCard = {
 
 export const ProductCard = (props: ProductCard) => {
     const {
+        id,
         name,
         description,
         price,
@@ -23,10 +26,37 @@ export const ProductCard = (props: ProductCard) => {
     } = props;
 
     const [showModal, setShowModal] = useState(false);
+    const {products, dispatch} = useCartContext();
+    const [count, setCount] = useState(0);
+
+    const countIncrement = () => {
+        if (count < Number(stock)) {
+            setCount(prevState => prevState + 1);
+        }
+    }
+
+    const countDecrement = () => {
+        if (count > 0) {
+            setCount(prevState => prevState - 1);
+        }
+    }
+
+    const changeCount = (value: string) => {
+        setCount(Number(value));
+    }
 
     const toggleModal = () => {
         setShowModal(prevState => !prevState);
     }
+
+    const addToCart = () => {
+        dispatch({
+            type: "add",
+            product: {id: id, name: name, description: description, price: price, quantity: count.toString()}
+        })
+    }
+
+    console.log(products);
 
     return (
         <div className="col-12 col-sm-6 col-md-3 px-2">
@@ -40,18 +70,9 @@ export const ProductCard = (props: ProductCard) => {
                 <button type="button" className="btn btn-link shadow-none" onClick={toggleModal}>
                     <span className="primary font-weight-bold">View More</span>
                 </button>
-                {
-                    Number(stock) > 0 ? (
-                        <button type="button" className="btn colored-button">
-                            ADD TO CART
-                        </button>
-                    ) : (
-                        <button disabled type="button" className={`${styles.noStockButton} btn`}>
-                            OUT OF STOCK
-                        </button>
-                    )
-                }
-                <ProductDetails name={name} price={price}
+                <AddToCartForm alignment={"column"} stock={stock} count={count.toString()} increment={countIncrement}
+                               decrement={countDecrement} change={changeCount} addToCart={addToCart}/>
+                <ProductDetails id={id} name={name} price={price}
                                 stock={stock}
                                 description={description} featuredImage={featuredImage}
                                 images={images} show={showModal} toggle={toggleModal}/>
