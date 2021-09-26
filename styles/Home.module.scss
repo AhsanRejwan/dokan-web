@@ -1,3 +1,12 @@
-.index {
-  background: #3F51B5;
+@import "./variable";
+
+.cartCount {
+  background: $primary;
+  color: $white;
+}
+
+.cartName {
+  background: $white;
+  color: $primary;
+  border: 1px solid $primary;
 }
