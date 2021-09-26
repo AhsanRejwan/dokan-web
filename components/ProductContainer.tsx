@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {ProductCard} from "./ProductCard";
 import {IoSearchOutline} from "react-icons/io5";
 import {Product} from "../models/Product";
+import {Form} from "react-bootstrap";
 
 const PLACEHOLDER_PRODUCTS: Product[] = [
     {
@@ -19,7 +20,7 @@ const PLACEHOLDER_PRODUCTS: Product[] = [
         stock: "2",
     },
     {
-        id: '#SFDSD213',
+        id: 'SFDSD213',
         name: 'Product 2',
         featuredImage: "https://picsum.photos/1600/900",
         images: [
@@ -33,7 +34,7 @@ const PLACEHOLDER_PRODUCTS: Product[] = [
         stock: "1",
     },
     {
-        id: '#RTERW345',
+        id: 'RTERW345',
         name: 'Product 3',
         featuredImage: "https://picsum.photos/1600/900",
         images: [
@@ -63,23 +64,33 @@ const PLACEHOLDER_PRODUCTS: Product[] = [
 ]
 
 export const ProductContainer = () => {
+    const [productList, setProductList] = useState<Product[]>(PLACEHOLDER_PRODUCTS);
+    const [filteredList, setFilteredList] = useState<Product[]>(PLACEHOLDER_PRODUCTS);
     const [searchString, setSearchString] = useState('');
 
+    const searchProducts = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        let newList = productList.filter(item => item.name.toLowerCase().includes(e.currentTarget.value.toLowerCase()));
+        setSearchString(e.currentTarget.value);
+        setFilteredList(newList);
+    }
 
     return (
         <div className="mt-5">
             <h6 className="primary font-weight-bold ">PRODUCTS</h6>
-            <div className="input-group mb-3 mt-3">
-                <input type="text" className="form-control" placeholder="Search"
-                       aria-label="Search Input" aria-describedby="input-field"/>
-                <div className="input-group-append">
-                    <span className="input-group-text"><IoSearchOutline className="primary" size={20}/></span>
+            <Form>
+                <div className="input-group mb-3 mt-3">
+                    <Form.Control type="text" className="form-control" placeholder="Search"
+                                  aria-label="Search Input" aria-describedby="input-field" value={searchString}
+                                  onChange={(event) => searchProducts(event)}/>
+                    <div className="input-group-append">
+                        <span className="input-group-text"><IoSearchOutline className="primary" size={20}/></span>
+                    </div>
                 </div>
-            </div>
+            </Form>
             <div className="row px-3 mt-2">
                 {
-                    PLACEHOLDER_PRODUCTS.map(product => (
-                        <ProductCard key={product.id} id={product.id} name={product.name} price={product.price}
+                    filteredList.map(product => (
+                        <ProductCard key={product.id} name={product.name} price={product.price}
                                      stock={product.stock}
                                      description={product.description} featuredImage={product.featuredImage}
                                      images={product.images}/>

@@ -5,7 +5,6 @@ import {IoAddCircle, IoClose, IoRemoveCircle} from "react-icons/io5"
 import styles from "../ProductCard.module.scss"
 
 type ProductDetails = {
-    id: string
     name: string,
     price: string,
     stock: string,
@@ -17,7 +16,7 @@ type ProductDetails = {
 }
 
 export const ProductDetails = (props: ProductDetails) => {
-    const {id, name, price, stock, description, featuredImage, images, show, toggle} = props;
+    const {name, price, stock, description, featuredImage, images, show, toggle} = props;
     const [addCount, setAddCount] = useState(0)
 
     const countIncrement = () => {
@@ -33,14 +32,13 @@ export const ProductDetails = (props: ProductDetails) => {
     }
 
     const changeCount = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        console.log(Number(e.currentTarget.value));
         setAddCount(Number(e.currentTarget.value));
     }
 
     return (
         <Modal show={show} onHide={toggle} animation={false}>
             <Modal.Header>
-                <Modal.Title>{name} #{id}</Modal.Title>
+                <Modal.Title>{name}</Modal.Title>
                 <Button variant="light" onClick={toggle}>
                     <IoClose size={20}/>
                 </Button>

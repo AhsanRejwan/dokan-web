@@ -3,9 +3,17 @@ import styles from "./ProductCard.module.scss"
 import {ProductDetails} from "./modals/ProductDetails";
 import {Product} from "../models/Product";
 
-export const ProductCard = (props: Product) => {
+type ProductCard = {
+    name: string,
+    price: string,
+    stock: string,
+    description: string
+    featuredImage: string,
+    images: string[]
+}
+
+export const ProductCard = (props: ProductCard) => {
     const {
-        id,
         name,
         description,
         price,
@@ -27,7 +35,6 @@ export const ProductCard = (props: Product) => {
                     <img src={featuredImage} alt={"Product Image"} width="100%" height="100%"/>
                 </div>
                 <span className="mt-3 font-weight-bold text-break text-center">{name.toUpperCase()}</span>
-                <span className="font-weight-bold text-break text-center">#{id}</span>
                 <span className="primary">{price} BDT</span>
                 <span className="font-weight-bold text-break text-center">In Stock: {stock}</span>
                 <button type="button" className="btn btn-link shadow-none" onClick={toggleModal}>
@@ -44,7 +51,7 @@ export const ProductCard = (props: Product) => {
                         </button>
                     )
                 }
-                <ProductDetails id={id} name={name} price={price}
+                <ProductDetails name={name} price={price}
                                 stock={stock}
                                 description={description} featuredImage={featuredImage}
                                 images={images} show={showModal} toggle={toggleModal}/>
