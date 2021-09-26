@@ -38,3 +38,4 @@ yarn-error.log*
 /.idea/watcherTasks.xml
 /.idea/.gitignore
 /.idea/inspectionProfiles/Project_Default.xml
+/.idea/workspace.xml
