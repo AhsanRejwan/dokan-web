@@ -4,6 +4,7 @@ import {Button} from "react-bootstrap";
 import {IoClose} from "react-icons/io5"
 import {AddToCartForm} from "../AddToCartForm";
 import {useCartContext} from "../../contexts/CartContext";
+import {useAlertContext} from "../../contexts/AlertContext";
 
 type ProductDetails = {
     id: string,
@@ -21,7 +22,8 @@ export const ProductDetails = (props: ProductDetails) => {
     const {id, name, price, stock, description, featuredImage, images, show, toggle} = props;
     const [count, setCount] = useState(0);
 
-    const {products, dispatch} = useCartContext()
+    const {products, cartDispatch} = useCartContext();
+    const {alertDispatch} = useAlertContext()
 
     const countIncrement = () => {
         if (count < Number(stock)) {
@@ -40,10 +42,18 @@ export const ProductDetails = (props: ProductDetails) => {
     }
 
     const addToCart = () => {
-        dispatch({
-            type: "add",
-            product: {id: id, name: name, description: description, price: price, quantity: count.toString()}
-        })
+        if(count <= Number(stock) && count >0) {
+            cartDispatch({
+                type: "add",
+                product: {id: id, name: name, description: description, price: price, quantity: count.toString()}
+            })
+        } else {
+            alertDispatch({
+                type: "show",
+                content: {type:"danger", message:"There isn't enough products in stock"}
+            })
+        }
+        changeCount("0");
     }
 
     console.log(products);
@@ -79,7 +89,7 @@ export const ProductDetails = (props: ProductDetails) => {
                     <span>{description}</span>
                 </div>
                 <AddToCartForm stock={stock} count={count.toString()} increment={countIncrement}
-                               decrement={countDecrement} change={changeCount} addToCart={addToCart}/>
+                               decrement={countDecrement} changeValue={changeCount} addToCart={addToCart}/>
             </Modal.Body>
         </Modal>
     );

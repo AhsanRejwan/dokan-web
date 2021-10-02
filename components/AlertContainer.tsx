@@ -1,7 +1,7 @@
 import {useAlertContext} from "../contexts/AlertContext";
 
 export const AlertContainer = () => {
-    const {state, dispatch} = useAlertContext();
+    const {state, alertDispatch} = useAlertContext();
 
     return (
         <>
@@ -10,7 +10,7 @@ export const AlertContainer = () => {
                         <div className={`alert alert-${state.alert.type} alert-container`}>
                             <div className="d-flex justify-content-between align-items-center">
                                 <span className="text-center flex-grow-1 flex-shrink-1">{state.alert.message}</span>
-                                <button type="button" className="cancel-button" onClick={()=>dispatch({type: "close"})}>
+                                <button type="button" className="cancel-button" onClick={()=>alertDispatch({type: "close"})}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                          className="bi bi-x-lg" viewBox="0 0 16 16">
                                         <path

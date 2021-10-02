@@ -9,16 +9,16 @@ type AddToCartForm = {
     count: string
     increment: () => void,
     decrement: () => void,
-    change: (value: string) => void,
+    changeValue: (value: string) => void,
     addToCart: () => void
 }
 
 export const AddToCartForm = (props: AddToCartForm) => {
-    const {alignment = "row", stock, count, increment, decrement, change, addToCart} = props;
+    const {alignment = "row", stock, count, increment, decrement, changeValue, addToCart} = props;
 
     const buttonClicked = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
-        change("0");
+        addToCart();
     }
 
     return (
@@ -29,7 +29,7 @@ export const AddToCartForm = (props: AddToCartForm) => {
                 <Form.Control type="number" min="1" max={stock}
                               className={styles.quantityInput}
                               aria-label="Quantity Input" aria-describedby="input-field" value={count}
-                              onChange={(event) => change(event.currentTarget.value)}/>
+                              onChange={(event) => changeValue(event.currentTarget.value)}/>
                 <IoAddCircle role="button" size={30} color="green" onClick={increment}/>
             </div>
             {

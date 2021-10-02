@@ -2,7 +2,7 @@ import React, {Dispatch, useContext, useReducer} from "react";
 
 const EMPTY: CartContext = {
     products: [],
-    dispatch: () => console.error("Dispatch was uninitialized")
+    cartDispatch: () => console.error("Dispatch was uninitialized")
 }
 
 type CarProviderProps = {
@@ -24,7 +24,7 @@ type CartActions = {
 
 type CartContext = {
     products: Product[]
-    dispatch: Dispatch<CartActions>
+    cartDispatch: Dispatch<CartActions>
 }
 
 const CartContext = React.createContext(EMPTY);
@@ -47,7 +47,7 @@ export const CartContextProvider = (props: CarProviderProps) => {
     const [state, dispatch] = useReducer(cartReducer, EMPTY.products)
 
     return (
-        <CartContext.Provider value={{products: state, dispatch: dispatch}}>
+        <CartContext.Provider value={{products: state, cartDispatch: dispatch}}>
             {props.children}
         </CartContext.Provider>
     )

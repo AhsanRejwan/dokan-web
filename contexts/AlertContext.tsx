@@ -9,7 +9,7 @@ const EMPTY: AlertContext = {
             message: "",
         },
     },
-    dispatch: () => console.error("Dispatch was uninitialized")
+    alertDispatch: () => console.error("Dispatch was uninitialized")
 }
 
 type AlertContent = {
@@ -35,7 +35,7 @@ type ActionTypes = {
 
 type AlertContext = {
     state: AlertState,
-    dispatch: Dispatch<ActionTypes>
+    alertDispatch: Dispatch<ActionTypes>
 }
 
 const AlertContext = React.createContext<AlertContext>(EMPTY);
@@ -59,7 +59,7 @@ export const AlertContextProvider = (props: AlertProviderProps) => {
     const [state, dispatch] = useReducer(alertReducer, EMPTY.state)
 
     return (
-        <AlertContext.Provider value={{state: state, dispatch: dispatch}}>
+        <AlertContext.Provider value={{state: state, alertDispatch: dispatch}}>
             <AlertContainer/>
             {props.children}
         </AlertContext.Provider>

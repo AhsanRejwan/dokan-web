@@ -3,6 +3,7 @@ import styles from "./ProductCard.module.scss"
 import {ProductDetails} from "./modals/ProductDetails";
 import {useCartContext} from "../contexts/CartContext";
 import {AddToCartForm} from "./AddToCartForm";
+import {useAlertContext} from "../contexts/AlertContext";
 
 type ProductCard = {
     id: string,
@@ -26,7 +27,8 @@ export const ProductCard = (props: ProductCard) => {
     } = props;
 
     const [showModal, setShowModal] = useState(false);
-    const {products, dispatch} = useCartContext();
+    const {products, cartDispatch} = useCartContext();
+    const {alertDispatch} = useAlertContext()
     const [count, setCount] = useState(0);
 
     const countIncrement = () => {
@@ -50,10 +52,18 @@ export const ProductCard = (props: ProductCard) => {
     }
 
     const addToCart = () => {
-        dispatch({
-            type: "add",
-            product: {id: id, name: name, description: description, price: price, quantity: count.toString()}
-        })
+        if(count <= Number(stock) && count >0) {
+            cartDispatch({
+                type: "add",
+                product: {id: id, name: name, description: description, price: price, quantity: count.toString()}
+            })
+        } else {
+            alertDispatch({
+                type: "show",
+                content: {type:"danger", message:"There isn't enough products in stock"}
+            })
+        }
+        changeCount("0");
     }
 
     console.log(products);
@@ -71,7 +81,7 @@ export const ProductCard = (props: ProductCard) => {
                     <span className="primary font-weight-bold">View More</span>
                 </button>
                 <AddToCartForm alignment={"column"} stock={stock} count={count.toString()} increment={countIncrement}
-                               decrement={countDecrement} change={changeCount} addToCart={addToCart}/>
+                               decrement={countDecrement} changeValue={changeCount} addToCart={addToCart}/>
                 <ProductDetails id={id} name={name} price={price}
                                 stock={stock}
                                 description={description} featuredImage={featuredImage}
