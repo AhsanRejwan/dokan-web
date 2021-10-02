@@ -1,11 +1,15 @@
 @import "~bootstrap/scss/bootstrap";
+@import "./_variable.scss";
 
 html,
 body {
+  background-color: #f9f9f9;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-size: 14px;
+  min-height: 100vh;
 }
 
 a {
@@ -15,4 +19,75 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.alert-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+  .cancel-button {
+    border: 0;
+    background: transparent;
+    padding: 0;
+  }
+}
+
+.centered-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.primary {
+  color: $primary;
+}
+
+.white {
+  color: $white;
+}
+
+.featured-image-container {
+  background: $primary;
+  width: 90%;
+  height: 0;
+  padding-bottom: 9/16*90%;
+  border-radius: $border-radius;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.image-container {
+  background: $primary;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+  border-radius: $border-radius;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.colored-button {
+  background-color: $primary !important;
+  border-color: $primary !important;
+  color: $white;
+  box-shadow: none;
+
+  &:hover {
+    color: $white;
+  }
 }

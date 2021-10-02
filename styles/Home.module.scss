@@ -1,0 +1,12 @@
+@import "./variable";
+
+.cartCount {
+  background: $primary;
+  color: $white;
+}
+
+.cartName {
+  background: $white;
+  color: $primary;
+  border: 1px solid $primary;
+}
