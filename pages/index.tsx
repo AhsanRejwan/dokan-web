@@ -1,29 +1,21 @@
 import type {NextPage} from 'next'
-import {PageHeader} from "../components/PageHeader";
-import styles from '../styles/Home.module.scss'
-import {IoCartOutline} from "react-icons/io5"
-import {ProductContainer} from "../components/ProductContainer";
+import {useCartContext} from "../contexts/CartContext";
+import {IoConstructOutline} from "react-icons/io5";
 
-const Home: NextPage = () => {
+const Index: NextPage = () => {
+    const {products} = useCartContext()
+
+    console.log(products);
+
     return (
-        <div className="mx-0 mx-md-auto col-12 col-md-10 col-lg-8 col-xl-6 mt-3">
-            <PageHeader/>
-            <div className="mx-3">
-                <div className="d-flex justify-content-end mt-4">
-                    <div className={`${styles.cartCount} centered-flex p-2`}>
-                        15
-                    </div>
-                    <div className={`${styles.cartName} centered-flex p-2`}>
-                        <span className="font-weight-bold">MY CART</span>
-                        <div className="pl-3 centered-flex">
-                            <IoCartOutline size="25"/>
-                        </div>
-                    </div>
-                </div>
-                <ProductContainer/>
+        <div className="w-100 home-placeholder d-flex flex-column justify-content-center align-items-center">
+            <div className="d-flex align-items-center">
+                <IoConstructOutline size={35}/>
+                <h1 className="ml-3">Our Home Page is coming soon....</h1>
             </div>
+            <h3 className="primary">In the meantime, please visit the link given by the store owner.</h3>
         </div>
     )
 }
 
-export default Home
+export default Index

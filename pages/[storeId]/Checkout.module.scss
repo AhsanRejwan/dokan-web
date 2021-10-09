@@ -1,0 +1,11 @@
+@import "../../styles/variable";
+
+.checkoutContainer {
+  width: 100%;
+  @media (min-width: 576px) {
+    width: 75%;
+  }
+}
+
+
+
