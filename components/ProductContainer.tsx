@@ -16,8 +16,8 @@ const PLACEHOLDER_PRODUCTS: Product[] = [
             "https://picsum.photos/200/300"
         ],
         description: "This can be used for listening to songs and gaming. Very good. Comes in three sizes- sm, md and L. Add size in note",
-        price: '1200',
-        stock: "2",
+        price: 1200,
+        stock: 2,
     },
     {
         id: 'SFDSD213',
@@ -30,8 +30,8 @@ const PLACEHOLDER_PRODUCTS: Product[] = [
             "https://picsum.photos/200/300"
         ],
         description: "This can be used for listening to songs and gaming. Very good. Comes in three sizes- sm, md and L. Add size in note",
-        price: '1200',
-        stock: "1",
+        price: 1200,
+        stock: 1,
     },
     {
         id: 'RTERW345',
@@ -44,11 +44,11 @@ const PLACEHOLDER_PRODUCTS: Product[] = [
             "https://picsum.photos/200/300"
         ],
         description: "This can be used for listening to songs and gaming. Very good. Comes in three sizes- sm, md and L. Add size in note",
-        price: '1200',
-        stock: "5",
+        price: 1200,
+        stock: 500,
     },
     {
-        id: '#RTERWQ45',
+        id: '#RTERQ45',
         name: 'Product 4',
         featuredImage: "https://picsum.photos/1600/900",
         images: [
@@ -58,9 +58,9 @@ const PLACEHOLDER_PRODUCTS: Product[] = [
             "https://picsum.photos/200/300"
         ],
         description: "This can be used for listening to songs and gaming. Very good. Comes in three sizes- sm, md and L. Add size in note",
-        price: '1200',
-        stock: "0",
-    }
+        price: 1200,
+        stock: 1,
+    },
 ]
 
 export const ProductContainer = () => {

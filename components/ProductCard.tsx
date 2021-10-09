@@ -8,8 +8,8 @@ import {useAlertContext} from "../contexts/AlertContext";
 type ProductCard = {
     id: string,
     name: string,
-    price: string,
-    stock: string,
+    price: number,
+    stock: number,
     description: string
     featuredImage: string,
     images: string[]
@@ -29,22 +29,20 @@ export const ProductCard = (props: ProductCard) => {
     const [showModal, setShowModal] = useState(false);
     const {products, cartDispatch} = useCartContext();
     const {alertDispatch} = useAlertContext()
-    const [count, setCount] = useState(0);
+    const quantityInCart = products.find(product => product.id === id)?.quantity
+    const [count, setCount] = useState(quantityInCart? quantityInCart: 0);
 
     const countIncrement = () => {
-        if (count < Number(stock)) {
-            setCount(prevState => prevState + 1);
-        }
+        setCount(prevState => prevState + 1);
+
     }
 
     const countDecrement = () => {
-        if (count > 0) {
-            setCount(prevState => prevState - 1);
-        }
+        setCount(prevState => prevState - 1);
     }
 
-    const changeCount = (value: string) => {
-        setCount(Number(value));
+    const changeCount = (value: number) => {
+        setCount(value);
     }
 
     const toggleModal = () => {
@@ -52,21 +50,27 @@ export const ProductCard = (props: ProductCard) => {
     }
 
     const addToCart = () => {
-        if(count <= Number(stock) && count >0) {
+        let numberCount = count
+        if (numberCount <= stock && numberCount > 0) {
             cartDispatch({
                 type: "add",
-                product: {id: id, name: name, description: description, price: price, quantity: count.toString()}
+                product: {
+                    id: id,
+                    name: name,
+                    description: description,
+                    price: price,
+                    quantity: numberCount,
+                    featuredImage: featuredImage,
+                    stock: stock
+                }
             })
         } else {
             alertDispatch({
                 type: "show",
-                content: {type:"danger", message:"There isn't enough products in stock"}
+                content: {type: "danger", message: `Please enter a valid quantity to add to cart`}
             })
         }
-        changeCount("0");
     }
-
-    console.log(products);
 
     return (
         <div className="col-12 col-sm-6 col-md-3 px-2">
@@ -80,7 +84,7 @@ export const ProductCard = (props: ProductCard) => {
                 <button type="button" className="btn btn-link shadow-none" onClick={toggleModal}>
                     <span className="primary font-weight-bold">View More</span>
                 </button>
-                <AddToCartForm alignment={"column"} stock={stock} count={count.toString()} increment={countIncrement}
+                <AddToCartForm alignment={"column"} stock={stock} count={count} increment={countIncrement}
                                decrement={countDecrement} changeValue={changeCount} addToCart={addToCart}/>
                 <ProductDetails id={id} name={name} price={price}
                                 stock={stock}

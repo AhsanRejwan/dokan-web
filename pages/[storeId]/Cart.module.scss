@@ -1,0 +1,30 @@
+@import "../../styles/variable";
+
+.cartContainer {
+  width: 100%;
+  @media (min-width: 576px) {
+    width: 75%;
+  }
+
+  .infoIcon {
+    margin-left: -3px;
+    color: $primary;
+  }
+
+  .productContainer {
+    max-height: 390px;
+    overflow-y: overlay;
+  }
+
+  .divider {
+    border: none;
+    background-color: $primary;
+    color: $primary;
+    width: 100%;
+    height: 1px;
+    margin-top: 1.2rem;
+  }
+}
+
+
+

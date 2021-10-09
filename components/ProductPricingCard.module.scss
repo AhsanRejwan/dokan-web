@@ -1,0 +1,36 @@
+@import "/styles/variable";
+
+.cartImage {
+  @media (min-width: 500px) {
+    min-width: 90px;
+    padding-bottom: 90px;
+  }
+
+  background: $primary;
+  min-width: 50px;
+  height: 0;
+  padding-bottom: 50px;
+  border-radius: $border-radius;
+  position: relative;
+  overflow: hidden;
+
+  img {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+.inactive {
+  opacity: 0.5;
+}
+
+.productTitle {
+  font-weight: bold;
+  line-height: 1rem;
+
+  @media (min-width: 500px) {
+    font-size: 1.2rem;
+  }
+
+}
