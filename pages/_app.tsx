@@ -1,18 +1,15 @@
-import '../styles/globals.scss'
-import type {AppProps} from 'next/app'
-import {AlertContextProvider} from "../contexts/AlertContext";
+import type { AppProps } from 'next/app';
 import React from "react";
-import {AppContextProvider} from "../contexts/AppContext";
-import {CartContextProvider} from "../contexts/CartContext";
+import { AlertContextProvider } from "../contexts/AlertContext";
+import { CartContextProvider } from "../contexts/CartContext";
+import '../styles/globals.scss';
 
 const MyApp = ({Component, pageProps}: AppProps) => {
     return (
         <AlertContextProvider>
-            <AppContextProvider>
-                <CartContextProvider>
-                    <Component {...pageProps} />
-                </CartContextProvider>
-            </AppContextProvider>
+            <CartContextProvider>
+                <Component {...pageProps} />
+            </CartContextProvider>
         </AlertContextProvider>
     )
 }
