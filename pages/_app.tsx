@@ -1,19 +1,19 @@
-import '../styles/globals.scss'
-import type {AppProps} from 'next/app'
-import {AlertContextProvider} from "../contexts/AlertContext";
+import type { AppProps } from "next/app";
 import React from "react";
-import {AppContextProvider} from "../contexts/AppContext";
-import {CartContextProvider} from "../contexts/CartContext";
+import { SWRConfig } from "swr";
+import { AlertContextProvider } from "../contexts/AlertContext";
+import { CartContextProvider } from "../contexts/CartContext";
+import "../styles/globals.scss";
 
-const MyApp = ({Component, pageProps}: AppProps) => {
-    return (
-        <AlertContextProvider>
-            <AppContextProvider>
-                <CartContextProvider>
-                    <Component {...pageProps} />
-                </CartContextProvider>
-            </AppContextProvider>
-        </AlertContextProvider>
-    )
-}
-export default MyApp
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  return (
+    <AlertContextProvider>
+      <SWRConfig>
+        <CartContextProvider>
+          <Component {...pageProps} />
+        </CartContextProvider>
+      </SWRConfig>
+    </AlertContextProvider>
+  );
+};
+export default MyApp;

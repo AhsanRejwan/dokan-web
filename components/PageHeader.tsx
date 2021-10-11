@@ -1,15 +1,19 @@
 import React from "react";
 import styles from "./PageHeader.module.scss";
-import {useAppContext} from "../contexts/AppContext";
+import { StoreDetails } from "../models/StoreDetails";
 
-export const PageHeader = () => {
-    const appInfo = useAppContext()
+type PageHeaderProps = {
+    storeDetails: StoreDetails;
+}
+
+export const PageHeader = (props: PageHeaderProps) => {
+    const {storeDetails} = props;
 
     return (
         <div className={`${styles.header} px-3 py-4`}>
-            <h3>{appInfo.storeName.toUpperCase()}</h3>
-            <div>{appInfo.address.toUpperCase()}</div>
-            <div>Contact {appInfo.contact}</div>
+            <h3>{storeDetails.storeName.toUpperCase()}</h3>
+            <div>{storeDetails.address.toUpperCase()}</div>
+            <div>Contact {storeDetails.phoneNumber}</div>
         </div>
     )
 }
