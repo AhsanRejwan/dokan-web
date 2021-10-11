@@ -6,16 +6,12 @@ import { Breadcrumb, Form } from "react-bootstrap";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { PageHeader } from "../../components/PageHeader";
 import { ProductPricingCard } from "../../components/ProductPricingCard";
+import { DELIVERY_METHOD } from "../../constants/appConstants";
 import { serviceLinks } from "../../constants/serviceLinks";
 import { useCartContext } from "../../contexts/CartContext";
 import { StoreDetails } from "../../models/StoreDetails";
 import { createDefaultAxios } from "../../service/axios";
 import styles from "./Cart.module.scss";
-
-export const DELIVERY_METHOD = {
-  home: "delivery-home",
-  store: "delivery-store",
-};
 
 type CartPageProps = {
   storeDetails: StoreDetails;
@@ -24,7 +20,9 @@ type CartPageProps = {
 const CartPage: NextPage<CartPageProps> = (props) => {
   const { storeDetails } = props;
   const { products, cartDispatch } = useCartContext();
-  const [deliveryMethod, setDeliveryMethod] = useState(DELIVERY_METHOD.store);
+  const [deliveryMethod, setDeliveryMethod] = useState(
+    DELIVERY_METHOD.STORE_PICKUP.value
+  );
   const router = useRouter();
   const { storeId } = router.query;
 
@@ -85,7 +83,7 @@ const CartPage: NextPage<CartPageProps> = (props) => {
                 inline
                 name="delivery"
                 type="radio"
-                id="delivery-home"
+                id={DELIVERY_METHOD.HOME_DELIVERY.value}
                 label="Home Delivery"
                 onChange={(event) => setDeliveryMethod(event.target.id)}
               />
@@ -93,7 +91,7 @@ const CartPage: NextPage<CartPageProps> = (props) => {
                 inline
                 name="delivery"
                 type="radio"
-                id="delivery-store"
+                id={DELIVERY_METHOD.STORE_PICKUP.value}
                 label="Store Pickup"
                 onChange={(event) => setDeliveryMethod(event.target.id)}
                 defaultChecked

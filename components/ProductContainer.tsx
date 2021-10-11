@@ -4,7 +4,6 @@ import { Form } from "react-bootstrap";
 import { IoSearchOutline } from "react-icons/io5";
 import useQuery from "swr";
 import { serviceLinks } from "../constants/serviceLinks";
-import { Product } from "../models/Product";
 import { fetchProducts } from "../service/services";
 import { ProductCard } from "./ProductCard";
 

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { PageHeader } from "../../components/PageHeader";
-import { Breadcrumb, Form, InputGroup } from "react-bootstrap";
+import { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styles from "./Checkout.module.scss";
-import { useCartContext } from "../../contexts/CartContext";
+import React, { useState } from "react";
+import { Breadcrumb, Form, InputGroup } from "react-bootstrap";
+import { useForm } from "react-hook-form";
 import {
   IoBagCheck,
   IoCall,
@@ -13,35 +12,39 @@ import {
   IoClipboard,
   IoPerson,
 } from "react-icons/io5";
-import { useForm } from "react-hook-form";
 import { ConfirmSection } from "../../components/ConfirmSection";
-import { useAlertContext } from "../../contexts/AlertContext";
-import { StoreDetails } from "../../models/StoreDetails";
-import { GetServerSideProps, NextPage } from "next";
+import { PageHeader } from "../../components/PageHeader";
+import { PAYMENT_METHOD } from "../../constants/appConstants";
 import { serviceLinks } from "../../constants/serviceLinks";
+import { useAlertContext } from "../../contexts/AlertContext";
+import { useCartContext } from "../../contexts/CartContext";
+import { OrderRequest } from "../../models/OrderRequest";
+import { StoreDetails } from "../../models/StoreDetails";
 import { createDefaultAxios } from "../../service/axios";
+import { createNewOrder } from "../../service/services";
+import styles from "./Checkout.module.scss";
 
 const BD_PHONE_REGEX = /^01[3456789][0-9]{8}\b/g;
 
-type FORM_DATA = {
+type FormData = {
   name: string;
   phone: string;
   address: string;
-  note: string;
+  notes: string;
 };
 
-const FIELD_NAMES: FORM_DATA = {
+const FIELD_NAMES = {
   name: "name",
-  phone: "phoneNumber",
+  phone: "phone",
   address: "address",
-  note: "specialNote",
+  notes: "notes",
 };
 
 type CheckoutPageProps = {
   storeDetails: StoreDetails;
 };
 
-export const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
+const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
   const { storeDetails } = props;
   const router = useRouter();
   const { storeId, deliveryMethod } = router.query;
@@ -65,17 +68,42 @@ export const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
     return "";
   };
 
-  const submitForm = (data: FORM_DATA) => {
-    //backend api call
-    console.log(data);
-    //on success
+  const submitForm = async (data: FormData) => {
+    const orderRequest: OrderRequest = {
+      ...data,
+      deliveryMethod: deliveryMethod as string,
+      paymentMethod: PAYMENT_METHOD.cashOnDelivery.value,
+      totalPrice: products.reduce((prev, current) => {
+        return prev + current.numberOrdered * current.price;
+      }, 0),
+      totalQuantity: products.reduce((prev, current) => {
+        return prev + current.numberOrdered;
+      }, 0),
+      products: products.map((product) => ({
+        productId: product.id,
+        quantity: product.quantity,
+        unitPrice: product.price,
+      })),
+    };
 
-    setConfirmed(true);
-    setOrderId("#123ASDF12");
-    alertDispatch({
-      type: "show",
-      content: { type: "success", message: "Order was successfully placed" },
-    });
+    try {
+      const { data } = await createNewOrder(storeId as string, orderRequest);
+
+      setConfirmed(true);
+      setOrderId(data.id);
+      alertDispatch({
+        type: "show",
+        content: { type: "success", message: "Order was successfully placed" },
+      });
+    } catch (e: any) {
+      alertDispatch({
+        type: "show",
+        content: {
+          type: "danger",
+          message: e.response?.data?.message || "Failed to place order",
+        },
+      });
+    }
   };
 
   const onBrowseMoreClicked = () => {
@@ -124,9 +152,7 @@ export const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
                         placeholder="John Doe"
                         aria-label="name"
                         aria-describedby="person-icon"
-                        {...register(FIELD_NAMES.name, {
-                          required: "Name is required",
-                        })}
+                        {...register(FIELD_NAMES.name)}
                         isInvalid={FIELD_NAMES.name in errors}
                       />
                       <InputGroup.Text id="person-icon">
@@ -188,14 +214,14 @@ export const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
                         placeholder="Call beforehand"
                         aria-label="special-note"
                         aria-describedby="note-icon"
-                        {...register(FIELD_NAMES.note)}
-                        isInvalid={FIELD_NAMES.note in errors}
+                        {...register(FIELD_NAMES.notes)}
+                        isInvalid={FIELD_NAMES.notes in errors}
                       />
                       <InputGroup.Text id="note-icon">
                         <IoClipboard size={18} className="primary" />
                       </InputGroup.Text>
                       <Form.Control.Feedback type="invalid">
-                        {getError(FIELD_NAMES.note)}
+                        {getError(FIELD_NAMES.notes)}
                       </Form.Control.Feedback>
                     </InputGroup>
                     <div className="text-muted">Special Note</div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
@@ -77,22 +78,20 @@ export const ProductDetails = (props: ProductDetailsProps) => {
       </Modal.Header>
       <Modal.Body>
         <div className="featured-image-container mx-auto mb-3">
-          <img
-            src={featuredImage?.url || '/placeholder.png'}
+          <Image
+            src={featuredImage?.url || "/placeholder.png"}
             alt="Featured Image"
-            width="100%"
-            height="100%"
+            layout="fill"
           />
         </div>
         <div className="row mx-4">
           {images.map((image, index) => (
             <div className="col-3 px-1" key={index}>
               <div className="image-container">
-                <img
-                  src={image.url || '/placeholder.png'}
-                  alt="product image"
-                  width="100%"
-                  height="100%"
+                <Image
+                  src={image?.url || "/placeholder.png"}
+                  alt="Product image"
+                  layout="fill"
                 />
               </div>
             </div>
