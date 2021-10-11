@@ -14,13 +14,13 @@ export const ProductPricingCard = (props: ProductPricingCard) => {
     const {product, increment, decrement, remove} = props;
 
     const incrementAmount = () => {
-        if (product.quantity < product.stock) {
+        if (product.numberOrdered < product.quantity) {
             increment(product.id);
         }
     }
 
     const decrementAmount = () => {
-        if (product.quantity > 1)
+        if (product.numberOrdered > 1)
             decrement(product.id)
     }
 
@@ -47,16 +47,16 @@ export const ProductPricingCard = (props: ProductPricingCard) => {
             <div className="w-25 text-center">
                 <div className="d-flex align-items-center justify-content-center">
                     <IoRemoveCircle size={20}
-                                    className={`primary mt-1 ml-1 ${product.quantity <= 1 ? styles.inactive : ''}`}
-                                    onClick={decrementAmount} role={product.quantity <= 1 ? "" : "button"}/>
-                    <div className={styles.productTitle}>{product.quantity}</div>
+                                    className={`primary mt-1 ml-1 ${product.numberOrdered <= 1 ? styles.inactive : ''}`}
+                                    onClick={decrementAmount} role={product.numberOrdered <= 1 ? "" : "button"}/>
+                    <div className={styles.productTitle}>{product.numberOrdered}</div>
                     <IoAddCircle size={20}
-                                 className={`primary mt-1 ${product.quantity >= product.stock ? styles.inactive : ''}`}
-                                 onClick={incrementAmount} role={product.quantity >= product.stock ? '' : "button"}/>
+                                 className={`primary mt-1 ${product.numberOrdered >= product.quantity ? styles.inactive : ''}`}
+                                 onClick={incrementAmount} role={product.numberOrdered >= product.quantity ? '' : "button"}/>
                 </div>
             </div>
             <div className="w-25 mt-1 text-center">
-                <div className={`${styles.productTitle} w-75 mx-auto`}>{product.quantity * product.price}</div>
+                <div className={`${styles.productTitle} w-75 mx-auto`}>{product.numberOrdered * product.price}</div>
             </div>
         </div>
     )

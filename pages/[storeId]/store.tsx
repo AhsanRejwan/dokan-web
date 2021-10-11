@@ -28,11 +28,11 @@ const HomePage: NextPage<HomePageProps> = (props) => {
         <PageHeader storeDetails={storeDetails} />
         <div className="mx-3">
           <div role="button">
-            <Link href={`/${storeId}/cart`}>
+            <Link href={`/${storeId}/cart`} passHref>
               <div className="d-flex justify-content-end mt-4">
                 <div className={`${styles.cartCount} centered-flex p-2`}>
                   {products.reduce((prev, current) => {
-                    return prev + current.quantity;
+                    return prev + current.numberOrdered;
                   }, 0)}
                 </div>
                 <div className={`${styles.cartName} centered-flex p-2`}>

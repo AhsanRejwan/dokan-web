@@ -1,14 +1,11 @@
-export class Product {
-    static readonly EMPTY = new Product('', '', 0, 0, '', '', []);
+import { ImageData } from "./ImageData";
 
-    constructor(
-        public id: string,
-        public name: string,
-        public price: number,
-        public stock: number,
-        public description: string,
-        public featuredImage: string,
-        public images: string[]
-    ) {
-    }
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  description: string;
+  featuredImage?: ImageData;
+  images: ImageData[];
 }

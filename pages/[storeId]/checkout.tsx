@@ -249,7 +249,7 @@ export const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
         ) : (
           <h3 className="text-center">
             You haven&apos;t added any products to cart.{" "}
-            <Link href={`/${storeId}/store`}>
+            <Link href={`/${storeId}/store`} passHref>
               <span className="primary" role="button">
                 Go to store
               </span>

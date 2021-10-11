@@ -58,14 +58,11 @@ const CartPage: NextPage<CartPageProps> = (props) => {
     [cartDispatch]
   );
 
-  const onCheckoutClicked = () => {
-    router
-      .push({
-        pathname: `/${storeId}/checkout`,
-        query: { deliveryMethod: deliveryMethod },
-      })
-      .then()
-      .catch();
+  const onCheckoutClicked = async () => {
+    await router.push({
+      pathname: `/${storeId}/checkout`,
+      query: { deliveryMethod: deliveryMethod },
+    });
   };
 
   return (
@@ -157,7 +154,7 @@ const CartPage: NextPage<CartPageProps> = (props) => {
               <h5 className="w-75 font-weight-bold">TOTAL PRICE</h5>
               <h5 className="w-25 font-weight-bold text-center">
                 {products.reduce((prev, current) => {
-                  return prev + current.quantity * current.price;
+                  return prev + current.numberOrdered * current.price;
                 }, 0)}
               </h5>
             </div>
@@ -177,7 +174,7 @@ const CartPage: NextPage<CartPageProps> = (props) => {
         ) : (
           <h3 className="text-center">
             You haven&apos;t added any products to cart.{" "}
-            <Link href={`/${storeId}/store`}>
+            <Link href={`/${storeId}/store`} passHref>
               <span className="primary" role="button">
                 Go to store
               </span>
