@@ -1,10 +1,9 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import { useAlertContext } from "../contexts/AlertContext";
-import { useCartContext } from "../contexts/CartContext";
-import { Product } from "../models/Product";
-import { AddToCartForm } from "./AddToCartForm";
-import { ProductDetails } from "./modals/ProductDetails";
+import React, {useState} from "react";
+import {useAlertContext} from "../contexts/AlertContext";
+import {useCartContext} from "../contexts/CartContext";
+import {Product} from "../models/Product";
+import {AddToCartForm} from "./AddToCartForm";
+import {ProductDetails} from "./modals/ProductDetails";
 import styles from "./ProductCard.module.scss";
 
 interface ProductCardProps extends Product {}
@@ -50,6 +49,13 @@ export const ProductCard = (props: ProductCardProps) => {
           quantity: quantity,
           featuredImage: featuredImage,
           numberOrdered: numberCount,
+        },
+      });
+      alertDispatch({
+        type: "show",
+        content: {
+          type: "success",
+          message: `Successfully added to cart`,
         },
       });
     } else {

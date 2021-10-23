@@ -1,12 +1,11 @@
-import Image from "next/image";
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import React, {useState} from "react";
+import {Button} from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import { IoClose } from "react-icons/io5";
-import { useAlertContext } from "../../contexts/AlertContext";
-import { useCartContext } from "../../contexts/CartContext";
-import { Product } from "../../models/Product";
-import { AddToCartForm } from "../AddToCartForm";
+import {IoClose} from "react-icons/io5";
+import {useAlertContext} from "../../contexts/AlertContext";
+import {useCartContext} from "../../contexts/CartContext";
+import {Product} from "../../models/Product";
+import {AddToCartForm} from "../AddToCartForm";
 
 interface ProductDetailsProps extends Product {
   show: boolean;
@@ -27,7 +26,7 @@ export const ProductDetails = (props: ProductDetailsProps) => {
   } = props;
   const [count, setCount] = useState(0);
 
-  const { products, cartDispatch } = useCartContext();
+  const { cartDispatch } = useCartContext();
   const { alertDispatch } = useAlertContext();
 
   const countIncrement = () => {
@@ -55,6 +54,13 @@ export const ProductDetails = (props: ProductDetailsProps) => {
           quantity: quantity,
           featuredImage: featuredImage,
           numberOrdered: numberCount,
+        },
+      });
+      alertDispatch({
+        type: "show",
+        content: {
+          type: "success",
+          message: `Successfully added to cart`,
         },
       });
     } else {
