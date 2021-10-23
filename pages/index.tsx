@@ -1,9 +1,7 @@
 import type {NextPage} from 'next'
-import {useCartContext} from "../contexts/CartContext";
 import {IoConstructOutline} from "react-icons/io5";
 
 const Index: NextPage = () => {
-    const {products} = useCartContext()
 
     return (
         <div className="w-100 home-placeholder d-flex flex-column justify-content-center align-items-center">

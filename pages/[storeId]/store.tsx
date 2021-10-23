@@ -9,6 +9,7 @@ import { useCartContext } from "../../contexts/CartContext";
 import { StoreDetails } from "../../models/StoreDetails";
 import { createDefaultAxios } from "../../service/axios";
 import styles from "./Home.module.scss";
+import {StoreNotFound} from "../../components/StoreNotFound";
 
 type HomePageProps = {
   error: any;
@@ -21,7 +22,7 @@ const HomePage: NextPage<HomePageProps> = (props) => {
   const { storeId } = useRouter().query;
 
   if (error) {
-    return <>Store not found</>;
+    return <StoreNotFound/>
   } else {
     return (
       <div className="mx-0 mx-md-auto col-12 col-md-10 col-lg-8 col-xl-6 mt-3">
