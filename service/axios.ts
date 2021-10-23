@@ -1,9 +1,9 @@
-import axios from "axios"
+import axios from "axios";
 
-const BASE_URL = "http://localhost:8080/api/v1/"
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const createDefaultAxios = () => {
-    return axios.create({
-        baseURL: BASE_URL
-    })
-}
+  return axios.create({
+    baseURL: API_BASE_URL,
+  });
+};

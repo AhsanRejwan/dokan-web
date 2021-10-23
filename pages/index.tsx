@@ -5,8 +5,6 @@ import {IoConstructOutline} from "react-icons/io5";
 const Index: NextPage = () => {
     const {products} = useCartContext()
 
-    console.log(products);
-
     return (
         <div className="w-100 home-placeholder d-flex flex-column justify-content-center align-items-center">
             <div className="d-flex align-items-center">

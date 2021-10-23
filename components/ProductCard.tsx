@@ -69,10 +69,9 @@ export const ProductCard = (props: ProductCardProps) => {
         className={`${styles.productContainer} py-3 px-4 d-flex flex-column align-items-center`}
       >
         <div className="image-container">
-          <Image
+          <img
             src={featuredImage?.url || "/placeholder.png"}
-            alt={"Product Image"}
-            layout="fill"
+            alt="Product Image"
           />
         </div>
         <span className="mt-3 font-weight-bold text-break text-center">

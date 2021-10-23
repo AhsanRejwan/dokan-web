@@ -63,7 +63,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (typeof storeUrlName === "string") {
     try {
       const { data } = await axios.get(serviceLinks.storeDetails(storeUrlName));
-      console.log("data", data);
       storeDetails = data;
     } catch (e: unknown) {
       error = "ERRORRR!!!";

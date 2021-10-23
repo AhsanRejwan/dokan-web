@@ -32,10 +32,9 @@ export const ProductPricingCard = (props: ProductPricingCard) => {
     <div className="d-flex justify-content-between mb-2">
       <div className="d-flex w-50">
         <div className={styles.cartImage}>
-          <Image
+          <img
             src={product.featuredImage?.url || "/placeholder.png"}
             alt="Featured Image"
-            layout="fill"
           />
         </div>
         <div className="pl-3 text-wrap">
