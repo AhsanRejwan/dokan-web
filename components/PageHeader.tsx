@@ -9,8 +9,6 @@ type PageHeaderProps = {
 export const PageHeader = (props: PageHeaderProps) => {
     const {storeDetails} = props;
 
-    console.log('store address', storeDetails.address);
-
     return (
         <div className={`${styles.header} px-3 py-4`}>
             <h3>{storeDetails.storeName.toUpperCase()}</h3>

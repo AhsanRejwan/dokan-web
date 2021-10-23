@@ -21,6 +21,8 @@ const HomePage: NextPage<HomePageProps> = (props) => {
   const { products } = useCartContext();
   const { storeId } = useRouter().query;
 
+  console.log('HomePage', products);
+
   if (error) {
     return <StoreNotFound/>
   } else {

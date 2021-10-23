@@ -20,7 +20,7 @@ export const ConfirmSection = (props: ConfirmSection) => {
           <Form.Control
             disabled
             value={products.reduce((prev, current) => {
-              return prev + current.quantity * current.price;
+              return prev + current.numberOrdered * current.price;
             }, 0)}
             aria-label="total-amount"
             aria-describedby="total-icon"

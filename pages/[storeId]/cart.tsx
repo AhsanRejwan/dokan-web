@@ -26,6 +26,8 @@ const CartPage: NextPage<CartPageProps> = (props) => {
   const router = useRouter();
   const { storeId } = router.query;
 
+  console.log('CartPage', products);
+
   const incrementQuantity = useCallback(
     (id: string) => {
       cartDispatch({

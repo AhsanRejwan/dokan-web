@@ -17,7 +17,7 @@ export const ProductCard = (props: ProductCardProps) => {
   const { alertDispatch } = useAlertContext();
   const quantityInCart = products.find(
     (product) => product.id === id
-  )?.quantity;
+  )?.numberOrdered;
   const [count, setCount] = useState(quantityInCart ? quantityInCart : 0);
 
   const countIncrement = () => {
