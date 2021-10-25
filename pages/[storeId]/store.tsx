@@ -21,8 +21,6 @@ const HomePage: NextPage<HomePageProps> = (props) => {
   const { products } = useCartContext();
   const { storeId } = useRouter().query;
 
-  console.log('HomePage', products);
-
   if (error) {
     return <StoreNotFound/>
   } else {
@@ -57,6 +55,7 @@ const HomePage: NextPage<HomePageProps> = (props) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const axios = createDefaultAxios();
   const storeUrlName = context.params?.storeId || "";
+  console.log("🚀 ~ file: store.tsx ~ line 58 ~ constgetServerSideProps:GetServerSideProps= ~ storeUrlName", storeUrlName)
   let storeDetails: StoreDetails = {
     address: "",
     phoneNumber: "",

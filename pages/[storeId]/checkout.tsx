@@ -68,8 +68,6 @@ const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
         return "";
     };
 
-    console.log('CheckoutPage', products);
-
     const submitForm = async (data: FormData) => {
         debugger;
         const orderRequest: OrderRequest = {
