@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import { IoSearchOutline } from "react-icons/io5";
 import useQuery from "swr";
 import { serviceLinks } from "../constants/serviceLinks";
-import { fetchProducts } from "../service/frontend-services";
+import { fetchProducts } from "../service/services";
 import { ProductCard } from "./ProductCard";
 
 export const ProductContainer = () => {
