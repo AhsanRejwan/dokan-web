@@ -21,7 +21,7 @@ import {useCartContext} from "../../contexts/CartContext";
 import {OrderRequest} from "../../models/OrderRequest";
 import {StoreDetails} from "../../models/StoreDetails";
 import {createDefaultAxios} from "../../service/axios";
-import {createNewOrder} from "../../service/services";
+import {createNewOrder} from "../../service/frontend-services";
 import styles from "./Checkout.module.scss";
 
 const BD_PHONE_REGEX = /^01[3456789][0-9]{8}\b/g;
