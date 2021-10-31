@@ -2,16 +2,10 @@ import {GetServerSideProps, NextPage} from "next";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import React, {useState} from "react";
-import {Breadcrumb, Form, InputGroup} from "react-bootstrap";
+import {Breadcrumb, Button, Form, InputGroup} from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import {useForm} from "react-hook-form";
-import {
-    IoBagCheck,
-    IoCall,
-    IoCard,
-    IoCheckmarkCircleOutline,
-    IoClipboard,
-    IoPerson,
-} from "react-icons/io5";
+import {IoBagCheck, IoCall, IoCard, IoCheckmarkCircleOutline, IoClipboard, IoClose, IoPerson,} from "react-icons/io5";
 import {ConfirmSection} from "../../components/ConfirmSection";
 import {PageHeader} from "../../components/PageHeader";
 import {PAYMENT_METHOD} from "../../constants/appConstants";
@@ -23,6 +17,7 @@ import {StoreDetails} from "../../models/StoreDetails";
 import {createDefaultAxios} from "../../service/axios";
 import {createNewOrder} from "../../service/services";
 import styles from "./Checkout.module.scss";
+
 
 const BD_PHONE_REGEX = /^01[3456789][0-9]{8}\b/g;
 
@@ -58,6 +53,7 @@ const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
     } = useForm();
 
     const [confirmed, setConfirmed] = useState(false);
+    const [showConfirmedModal, setShowConfirmedModal] = useState(false)
     const [orderId, setOrderId] = useState("");
 
     const getError = (fieldName: string) => {
@@ -69,7 +65,6 @@ const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
     };
 
     const submitForm = async (data: FormData) => {
-        debugger;
         const orderRequest: OrderRequest = {
             ...data,
             deliveryMethod: deliveryMethod as string,
@@ -89,7 +84,7 @@ const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
 
         try {
             const {data} = await createNewOrder(storeId as string, orderRequest);
-
+            setShowConfirmedModal(true);
             setConfirmed(true);
             setOrderId(data.id);
             alertDispatch({
@@ -114,8 +109,6 @@ const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
         router.push(`/${storeId}/store`).then();
     };
 
-    let x = 5;
-
     return (
         <div className="mx-0 mx-md-auto col-12 col-md-10 col-lg-8 col-xl-6 mt-3">
             <PageHeader storeDetails={storeDetails}/>
@@ -131,7 +124,7 @@ const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
             </Breadcrumb>
 
             <div className={`mt-5 mx-auto  ${styles.checkoutContainer}`}>
-                {x ? (
+                {products.length > 0 ? (
                     <>
                         <h5 className="primary font-weight-bold">
                             {confirmed && orderId
@@ -283,6 +276,18 @@ const CheckoutPage: NextPage<CheckoutPageProps> = (props) => {
                     </h3>
                 )}
             </div>
+          <Modal show={showConfirmedModal} onHide={()=> setShowConfirmedModal(false)} animation={true} centered>
+              <Modal.Header>
+                  <Modal.Title className="primary">Congratulations !!</Modal.Title>
+                  <Button variant="light" onClick={()=>setShowConfirmedModal(false)}>
+                      <IoClose size={20} />
+                  </Button>
+              </Modal.Header>
+
+              <Modal.Body>
+                  <p>Your order has been placed. Please save order id : {orderId} for future reference</p>
+              </Modal.Body>
+          </Modal>
         </div>
     );
 };
