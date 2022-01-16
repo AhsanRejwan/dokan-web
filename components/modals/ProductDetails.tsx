@@ -1,11 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button} from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import {IoClose} from "react-icons/io5";
 import {useAlertContext} from "../../contexts/AlertContext";
 import {useCartContext} from "../../contexts/CartContext";
-import {Product} from "../../models/Product";
 import {AddToCartForm} from "../AddToCartForm";
+import {updateProductVisited} from "../../service/services";
+import {Product} from "../../models/Product";
 
 interface ProductDetailsProps extends Product {
   show: boolean;
@@ -73,6 +74,14 @@ export const ProductDetails = (props: ProductDetailsProps) => {
       });
     }
   };
+
+  useEffect(() => {
+    if(show) {
+      updateProductVisited(id)
+        .then()
+        .catch(() => console.error('Product visit api called'));
+    }
+  }, [id, show])
 
   return (
     <Modal show={show} onHide={toggle} animation={false}>
