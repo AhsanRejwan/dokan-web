@@ -7,4 +7,4 @@ export const PAYMENT_METHOD = {
   cashOnDelivery: { value: "CASH_ON_DELIVERY", label: "Cash on delivery" },
 };
 
-export const VISIT_ARRAY = "Store_Visit";
+export const VISIT_KEY = "Store_Visit";

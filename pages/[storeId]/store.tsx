@@ -11,7 +11,7 @@ import {useCartContext} from "../../contexts/CartContext";
 import {StoreDetails} from "../../models/StoreDetails";
 import {createDefaultAxios} from "../../service/axios";
 import {updateStoreVisited} from "../../service/services";
-import {VISIT_ARRAY} from "../../constants/appConstants";
+import {VISIT_KEY} from "../../constants/appConstants";
 import styles from "./Home.module.scss";
 
 type HomePageProps = {
@@ -26,17 +26,17 @@ const HomePage: NextPage<HomePageProps> = (props) => {
 
   useEffect(() => {
     let visitedStores: Array<string> = [];
-    const localArray = localStorage.getItem(VISIT_ARRAY);
+    const localArray = localStorage.getItem(VISIT_KEY);
     if (localArray) {
       visitedStores = JSON.parse(localArray);
     }
-    if (visitedStores.find(item => item === storeId)) {
+    if (visitedStores.some(item => item === storeId)) {
       return;
     } else {
       updateStoreVisited(String(storeId))
         .then(() => {
           visitedStores.push(String(storeId));
-          localStorage.setItem(VISIT_ARRAY, JSON.stringify(visitedStores));
+          localStorage.setItem(VISIT_KEY, JSON.stringify(visitedStores));
         })
         .catch(() => console.error('Store visit api failed'))
     }
