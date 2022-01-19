@@ -5,6 +5,7 @@ import {IoClose} from "react-icons/io5";
 import {useAlertContext} from "../../contexts/AlertContext";
 import {useCartContext} from "../../contexts/CartContext";
 import {AddToCartForm} from "../AddToCartForm";
+import {ImageViewModal} from "./ImageViewModal";
 import {updateProductVisited} from "../../service/services";
 import {Product} from "../../models/Product";
 
@@ -25,8 +26,9 @@ export const ProductDetails = (props: ProductDetailsProps) => {
     show,
     toggle,
   } = props;
-  const [count, setCount] = useState(0);
 
+  const [count, setCount] = useState(0);
+  const [imageViewUrl, setImageViewUrl] = useState("");
   const { cartDispatch } = useCartContext();
   const { alertDispatch } = useAlertContext();
 
@@ -84,48 +86,54 @@ export const ProductDetails = (props: ProductDetailsProps) => {
   }, [id, show])
 
   return (
-    <Modal show={show} onHide={toggle} animation={false}>
-      <Modal.Header>
-        <Modal.Title>{name}</Modal.Title>
-        <Button variant="light" onClick={toggle}>
-          <IoClose size={20} />
-        </Button>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="featured-image-container mx-auto mb-3">
-          <img
-            src={featuredImage?.url || "/placeholder.png"}
-            alt="Featured Image"
-          />
-        </div>
-        <div className="row mx-4">
-          {images.map((image, index) => (
-            <div className="col-3 px-1" key={index}>
-              <div className="image-container">
-                <img
-                  src={image?.url || "/placeholder.png"}
-                  alt="Product image"
-                />
+    <>
+      <Modal show={show} onHide={toggle} animation={false}>
+        <Modal.Header>
+          <Modal.Title>{name}</Modal.Title>
+          <Button variant="light" onClick={toggle}>
+            <IoClose size={20} />
+          </Button>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="featured-image-container mx-auto mb-3" role="button" onClick={() => setImageViewUrl(featuredImage?.url || "")}>
+            <img
+              src={featuredImage?.url || "/placeholder.png"}
+              alt="Featured Image"
+            />
+          </div>
+          <div className="row mx-4">
+            {images.map((image, index) => (
+              <div className="col-3 px-1" key={index} role="button" onClick={() => setImageViewUrl(image?.url || "")}>
+                <div className="image-container">
+                  <img
+                    src={image?.url || "/placeholder.png"}
+                    alt="Product image"
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-5 d-flex justify-content-between align-items-center">
-          <h6 className="mb-0">In Stock: {quantity}</h6>
-          <span className="primary font-weight-bold">{price} BDT</span>
-        </div>
-        <div className="mt-2">
-          <span>{description}</span>
-        </div>
-        <AddToCartForm
-          stock={quantity}
-          count={count}
-          increment={countIncrement}
-          decrement={countDecrement}
-          changeValue={changeCount}
-          addToCart={addToCart}
-        />
-      </Modal.Body>
-    </Modal>
+            ))}
+          </div>
+          <div className="mt-5 d-flex justify-content-between align-items-center">
+            <h6 className="mb-0">In Stock: {quantity}</h6>
+            <span className="primary font-weight-bold">{price} BDT</span>
+          </div>
+          <div className="mt-2">
+            <span>{description}</span>
+          </div>
+          <AddToCartForm
+            stock={quantity}
+            count={count}
+            increment={countIncrement}
+            decrement={countDecrement}
+            changeValue={changeCount}
+            addToCart={addToCart}
+          />
+        </Modal.Body>
+      </Modal>
+      {
+        imageViewUrl &&
+          <ImageViewModal toggle={() => setImageViewUrl("")} imageUrl={imageViewUrl} />
+      }
+    </>
   );
 };
