@@ -1,15 +1,18 @@
-import type { GetServerSideProps, NextPage } from "next";
+import {useEffect} from "react";
+import type {GetServerSideProps, NextPage} from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { IoCartOutline } from "react-icons/io5";
-import { PageHeader } from "../../components/PageHeader";
-import { ProductContainer } from "../../components/ProductContainer";
-import { serviceLinks } from "../../constants/serviceLinks";
-import { useCartContext } from "../../contexts/CartContext";
-import { StoreDetails } from "../../models/StoreDetails";
-import { createDefaultAxios } from "../../service/axios";
-import styles from "./Home.module.scss";
+import {useRouter} from "next/router";
+import {IoCartOutline} from "react-icons/io5";
+import {PageHeader} from "../../components/PageHeader";
+import {ProductContainer} from "../../components/ProductContainer";
 import {StoreNotFound} from "../../components/StoreNotFound";
+import {serviceLinks} from "../../constants/serviceLinks";
+import {useCartContext} from "../../contexts/CartContext";
+import {StoreDetails} from "../../models/StoreDetails";
+import {createDefaultAxios} from "../../service/axios";
+import {updateStoreVisited} from "../../service/services";
+import {VISIT_KEY} from "../../constants/appConstants";
+import styles from "./Home.module.scss";
 
 type HomePageProps = {
   error: any;
@@ -20,6 +23,24 @@ const HomePage: NextPage<HomePageProps> = (props) => {
   const { storeDetails, error } = props;
   const { products } = useCartContext();
   const { storeId } = useRouter().query;
+
+  useEffect(() => {
+    let visitedStores: Array<string> = [];
+    const localArray = localStorage.getItem(VISIT_KEY);
+    if (localArray) {
+      visitedStores = JSON.parse(localArray);
+    }
+    if (visitedStores.some(item => item === storeId)) {
+      return;
+    } else {
+      updateStoreVisited(String(storeId))
+        .then(() => {
+          visitedStores.push(String(storeId));
+          localStorage.setItem(VISIT_KEY, JSON.stringify(visitedStores));
+        })
+        .catch(() => console.error('Store visit api failed'))
+    }
+  }, [storeId]);
 
   if (error) {
     return <StoreNotFound/>

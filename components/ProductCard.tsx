@@ -103,17 +103,20 @@ export const ProductCard = (props: ProductCardProps) => {
           changeValue={changeCount}
           addToCart={addToCart}
         />
-        <ProductDetails
-          id={id}
-          name={name}
-          price={price}
-          quantity={quantity}
-          description={description}
-          featuredImage={featuredImage}
-          images={images}
-          show={showModal}
-          toggle={toggleModal}
-        />
+        {
+          showModal &&
+          <ProductDetails
+              id={id}
+              name={name}
+              price={price}
+              quantity={quantity}
+              description={description}
+              featuredImage={featuredImage}
+              images={images}
+              show={showModal}
+              toggle={toggleModal}
+          />
+        }
       </div>
     </div>
   );
